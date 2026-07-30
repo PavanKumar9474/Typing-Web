@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { synth } from '../../utils/soundSynth';
-import { Shield, Target, Trophy, Flame } from 'lucide-react';
+import { Shield, Target, Flame } from 'lucide-react';
 
 const WORD_BANK = [
   'nebula', 'asteroid', 'galaxy', 'quantum', 'supernova', 'pulsar',

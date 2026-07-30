@@ -94,18 +94,17 @@ export const useTypingEngine = (initialText = '', onComplete = null) => {
 
     // Key stats tracking
     const cleanKey = targetChar.toLowerCase();
-    setKeyMetrics(prev => {
-      const current = prev[cleanKey] || { total: 0, errors: 0, latencies: [] };
-      const updatedLatencies = [...current.latencies, latency].slice(-10); // Keep last 10 samples
-      return {
-        ...prev,
-        [cleanKey]: {
-          total: current.total + 1,
-          errors: current.errors + (isCorrect ? 0 : 1),
-          latencies: updatedLatencies
-        }
-      };
-    });
+    const currentMetric = keyMetrics[cleanKey] || { total: 0, errors: 0, latencies: [] };
+    const updatedLatencies = [...currentMetric.latencies, latency].slice(-10); // Keep last 10 samples
+    const updatedKeyMetrics = {
+      ...keyMetrics,
+      [cleanKey]: {
+        total: currentMetric.total + 1,
+        errors: currentMetric.errors + (isCorrect ? 0 : 1),
+        latencies: updatedLatencies
+      }
+    };
+    setKeyMetrics(updatedKeyMetrics);
 
     if (isCorrect) {
       synth.playClick();
@@ -131,7 +130,7 @@ export const useTypingEngine = (initialText = '', onComplete = null) => {
             wpm: finalWpm,
             accuracy: finalAcc,
             errors: errorCount,
-            keyMetrics
+            keyMetrics: updatedKeyMetrics
           });
         }
       }
@@ -158,7 +157,7 @@ export const useTypingEngine = (initialText = '', onComplete = null) => {
             wpm: finalWpm,
             accuracy: finalAcc,
             errors: errorCount + 1,
-            keyMetrics
+            keyMetrics: updatedKeyMetrics
           });
         }
       }

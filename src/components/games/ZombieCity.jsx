@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { synth } from '../../utils/soundSynth';
-import { Shield, Skull, Heart, Trophy } from 'lucide-react';
+import { Shield, Skull, Trophy } from 'lucide-react';
 
 const ZOMBIE_WORDS = [
   'undead', 'zombie', 'brains', 'apocalypse', 'infect', 'graveyard',

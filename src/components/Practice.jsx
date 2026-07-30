@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTypingEngine } from '../hooks/useTypingEngine';
 import { synth } from '../utils/soundSynth';
-import { Award, Compass, RefreshCw, Star } from 'lucide-react';
+import { Compass, RefreshCw, Star } from 'lucide-react';
 
 const DRILLS = {
   homerow: {
@@ -52,7 +52,6 @@ export default function Practice({ onPracticeComplete, customDrillText }) {
 
   const {
     text,
-    input,
     cursor,
     wpm,
     accuracy,

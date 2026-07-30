@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTypingEngine } from '../hooks/useTypingEngine';
 import { synth } from '../utils/soundSynth';
-import { Trophy, Users, Play, Compass } from 'lucide-react';
+import { Trophy, Users, Play } from 'lucide-react';
 
 const MULTIPLAYER_TEXTS = [
   "A swift hacker breaches the firewall, bypassing encryption protocols in mere seconds to secure the core data nodes.",
@@ -88,12 +88,10 @@ export default function Multiplayer({ onRaceComplete }) {
 
   const {
     text,
-    input,
     cursor,
     wpm: playerWpm,
     accuracy: playerAccuracy,
-    handleKeyDown,
-    resetEngine
+    handleKeyDown
   } = useTypingEngine(gameState === 'racing' ? activeText : '', handlePlayerComplete);
 
   // Keyboard typing listener during race

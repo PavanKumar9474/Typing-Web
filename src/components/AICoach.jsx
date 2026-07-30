@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Brain, AlertCircle, TrendingUp, Sparkles } from 'lucide-react';
+import { Brain, AlertCircle, Sparkles } from 'lucide-react';
 
 export default function AICoach({ keyMetrics = {}, onSelectDrill }) {
   const analysis = useMemo(() => {

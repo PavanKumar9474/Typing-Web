@@ -26,7 +26,6 @@ export default function Dashboard({
   xp = 0, 
   wpm = 65, 
   accuracy = 97, 
-  streak = 5,
   keyMetrics = {},
   onNavigate 
 }) {
@@ -265,6 +264,67 @@ export default function Dashboard({
                 </div>
               </button>
 
+            </div>
+          </div>
+
+          {/* Cyberpunk WPM History Chart */}
+          <div className="bg-[#111625]/90 border border-cyan-500/20 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-500/5 blur-3xl rounded-full"></div>
+            
+            <h2 className="text-lg font-black text-white uppercase tracking-wider flex items-center gap-2 mb-4 border-b border-cyan-500/10 pb-3">
+              <Activity className="w-5 h-5 text-cyan-400 animate-pulse" /> Speed Velocity Over Time (WPM)
+            </h2>
+
+            <div className="h-44 w-full relative">
+              <svg className="w-full h-full overflow-visible" viewBox="0 0 500 160">
+                <defs>
+                  <linearGradient id="cyberpunkChartGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.25" />
+                    <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.0" />
+                  </linearGradient>
+                </defs>
+
+                {/* Grid Lines */}
+                <line x1="40" y1="20" x2="480" y2="20" stroke="rgba(6, 182, 212, 0.05)" strokeWidth="1" />
+                <line x1="40" y1="70" x2="480" y2="70" stroke="rgba(6, 182, 212, 0.05)" strokeWidth="1" />
+                <line x1="40" y1="120" x2="480" y2="120" stroke="rgba(6, 182, 212, 0.15)" strokeWidth="1.5" />
+
+                {/* Line graph */}
+                {(() => {
+                  const sessions = [
+                    { x: 60, y: 110, wpm: 48, name: "S1" },
+                    { x: 130, y: 80, wpm: 62, name: "S2" },
+                    { x: 200, y: 90, wpm: 55, name: "S3" },
+                    { x: 270, y: 55, wpm: 75, name: "S4" },
+                    { x: 340, y: 68, wpm: 66, name: "S5" },
+                    { x: 410, y: 40, wpm: 82, name: "S6" }
+                  ];
+
+                  const dPath = sessions.map((s, i) => `${i === 0 ? 'M' : 'L'} ${s.x} ${s.y}`).join(' ');
+                  const dArea = `${dPath} L 410 120 L 60 120 Z`;
+
+                  return (
+                    <g>
+                      <path d={dArea} fill="url(#cyberpunkChartGrad)" />
+                      <path d={dPath} fill="none" stroke="url(#cyberLineGrad)" strokeWidth="3" />
+                      <defs>
+                        <linearGradient id="cyberLineGrad" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%" stopColor="#06b6d4" />
+                          <stop offset="50%" stopColor="#a855f7" />
+                          <stop offset="100%" stopColor="#ec4899" />
+                        </linearGradient>
+                      </defs>
+                      {sessions.map((s, i) => (
+                        <g key={i}>
+                          <circle cx={s.x} cy={s.y} r="5" fill="#090d16" stroke="#06b6d4" strokeWidth="2.5" />
+                          <text x={s.x} y={s.y - 12} fill="#22d3ee" fontSize="10" fontWeight="bold" fontFamily="monospace" textAnchor="middle">{s.wpm} WPM</text>
+                          <text x={s.x} y="140" fill="#64748b" fontSize="11" fontWeight="bold" fontFamily="monospace" textAnchor="middle">{s.name}</text>
+                        </g>
+                      ))}
+                    </g>
+                  );
+                })()}
+              </svg>
             </div>
           </div>
 

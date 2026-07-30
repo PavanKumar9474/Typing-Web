@@ -64,6 +64,30 @@ export default function CyberHacker({ onGameComplete }) {
     return HACK_WORDS[Math.floor(Math.random() * HACK_WORDS.length)];
   };
 
+  const triggerGameComplete = useCallback((won, finalTrace) => {
+    const timeMinutes = (performance.now() - startTimeRef.current) / 60000;
+    const finalWpm = Math.round((totalPressesRef.current / 5) / (timeMinutes || 0.001));
+    const finalAcc = totalPressesRef.current > 0
+      ? Math.round(((totalPressesRef.current - totalErrorsRef.current) / totalPressesRef.current) * 100)
+      : 100;
+
+    const coinsEarned = won ? Math.round(100 + (100 - finalTrace) * 1.5) : Math.round(score * 0.1);
+    const xpEarned = won ? 150 : 40;
+
+    if (onGameComplete) {
+      onGameComplete({
+        wpm: finalWpm,
+        accuracy: finalAcc,
+        score: score + (won ? 500 : 0),
+        won,
+        coins: coinsEarned,
+        xp: xpEarned,
+        keyMetrics: keyMetricsRef.current
+      });
+    }
+  }, [score, onGameComplete]);
+
+
   // Log message helper
   const addLog = (message) => {
     setConsoleLogs(prev => [...prev, message].slice(-7));
@@ -227,28 +251,7 @@ export default function CyberHacker({ onGameComplete }) {
       return () => window.removeEventListener('keydown', handleKeyDown);
     }, [currentWord, typedChars, gameState, isDecoyActive, traceLevel, triggerGameComplete, onGameComplete]);
 
-  const triggerGameComplete = useCallback((won, finalTrace) => {
-    const timeMinutes = (performance.now() - startTimeRef.current) / 60000;
-    const finalWpm = Math.round((totalPressesRef.current / 5) / (timeMinutes || 0.001));
-    const finalAcc = totalPressesRef.current > 0
-      ? Math.round(((totalPressesRef.current - totalErrorsRef.current) / totalPressesRef.current) * 100)
-      : 100;
 
-    const coinsEarned = won ? Math.round(100 + (100 - finalTrace) * 1.5) : Math.round(score * 0.1);
-    const xpEarned = won ? 150 : 40;
-
-    if (onGameComplete) {
-      onGameComplete({
-        wpm: finalWpm,
-        accuracy: finalAcc,
-        score: score + (won ? 500 : 0),
-        won,
-        coins: coinsEarned,
-        xp: xpEarned,
-        keyMetrics: keyMetricsRef.current
-      });
-    }
-  }, [score, onGameComplete]);
 
   const handleRestart = () => {
     setBreachProgress(0);

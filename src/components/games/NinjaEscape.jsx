@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { synth } from '../../utils/soundSynth';
-import { Heart, Activity, Trophy } from 'lucide-react';
+import { Activity } from 'lucide-react';
 
 const OBSTACLES = [
   { word: 'jump', action: 'jump', name: 'Spike Pit' },

@@ -58,6 +58,30 @@ export default function NeonDrift({ onGameComplete }) {
     return list[Math.floor(Math.random() * list.length)];
   };
 
+  const triggerGameComplete = useCallback((won, finalShield) => {
+    const timeMinutes = (performance.now() - startTimeRef.current) / 60000;
+    const finalWpm = Math.round((totalPressesRef.current / 5) / (timeMinutes || 0.001));
+    const finalAcc = totalPressesRef.current > 0
+      ? Math.round(((totalPressesRef.current - totalErrorsRef.current) / totalPressesRef.current) * 100)
+      : 100;
+
+    const coinsEarned = won ? Math.round(150 + finalShield) : Math.round(distance * 0.1);
+    const xpEarned = won ? 200 : 50;
+
+    if (onGameComplete) {
+      onGameComplete({
+        wpm: finalWpm,
+        accuracy: finalAcc,
+        score: score + (won ? 800 : 0),
+        won,
+        coins: coinsEarned,
+        xp: xpEarned,
+        keyMetrics: keyMetricsRef.current
+      });
+    }
+  }, [score, distance, onGameComplete]);
+
+
   // Game loop ticks (Distance tracker)
   useEffect(() => {
     if (gameState !== 'playing') return;
@@ -254,28 +278,7 @@ export default function NeonDrift({ onGameComplete }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentWord, typedChars, gameState, steerTarget, steerWord, carLane, triggerGameComplete]);
 
-  const triggerGameComplete = useCallback((won, finalShield) => {
-    const timeMinutes = (performance.now() - startTimeRef.current) / 60000;
-    const finalWpm = Math.round((totalPressesRef.current / 5) / (timeMinutes || 0.001));
-    const finalAcc = totalPressesRef.current > 0
-      ? Math.round(((totalPressesRef.current - totalErrorsRef.current) / totalPressesRef.current) * 100)
-      : 100;
 
-    const coinsEarned = won ? Math.round(150 + finalShield) : Math.round(distance * 0.1);
-    const xpEarned = won ? 200 : 50;
-
-    if (onGameComplete) {
-      onGameComplete({
-        wpm: finalWpm,
-        accuracy: finalAcc,
-        score: score + (won ? 800 : 0),
-        won,
-        coins: coinsEarned,
-        xp: xpEarned,
-        keyMetrics: keyMetricsRef.current
-      });
-    }
-  }, [score, distance, onGameComplete]);
 
   const handleRestart = () => {
     setCarLane(1);

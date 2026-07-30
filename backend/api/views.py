@@ -86,7 +86,7 @@ class SessionHistoryAPI(views.APIView):
             # Merge key metrics
             new_metrics = data.get('key_metrics', {})
             if isinstance(new_metrics, dict):
-                merged = profile.key_metrics or {}
+                merged = dict(profile.key_metrics or {})
                 for key, stats in new_metrics.items():
                     if not isinstance(stats, dict):
                         continue
@@ -98,6 +98,7 @@ class SessionHistoryAPI(views.APIView):
                     if isinstance(latencies, list):
                         merged[key]['latencies'] = (merged[key]['latencies'] + latencies)[-15:]
                 profile.key_metrics = merged
+
                 
             profile.save()
             return Response({
@@ -134,7 +135,7 @@ class StorePurchaseAPI(views.APIView):
             
         # Deduct coins and add to purchased items
         profile.coins -= price
-        profile.purchased_items.append(item_id)
+        profile.purchased_items = list(profile.purchased_items or []) + [item_id]
         profile.save()
         
         return Response({

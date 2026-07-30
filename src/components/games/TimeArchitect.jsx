@@ -35,7 +35,7 @@ export default function TimeArchitect({ onGameComplete }) {
 
   const eraData = ERAS[selectedEra];
 
-  const handleLevelComplete = ({ wpm, accuracy, errors }) => {
+  const handleLevelComplete = ({ wpm, accuracy }) => {
     synth.playVictory();
     if (onGameComplete) {
       // Reward coins based on accuracy, WPM
@@ -54,7 +54,6 @@ export default function TimeArchitect({ onGameComplete }) {
 
   const {
     text,
-    input,
     cursor,
     wpm,
     accuracy,

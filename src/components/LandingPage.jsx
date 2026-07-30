@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { synth } from '../utils/soundSynth';
 import { api } from '../utils/api';
 import { 
-  Compass, Sparkles, Play, Shield, Cpu, Moon, 
+  Compass, Sparkles, Shield, Cpu, Moon, 
   Lock, User, AlertCircle, LogIn, UserPlus 
 } from 'lucide-react';
 

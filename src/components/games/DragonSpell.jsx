@@ -22,7 +22,7 @@ export default function DragonSpell({ onGameComplete }) {
 
   const currentSpell = SPELL_LIST[spellIndex % SPELL_LIST.length];
 
-  const handleSpellComplete = ({ accuracy, errors }) => {
+  const handleSpellComplete = ({ errors }) => {
     if (gameState !== 'playing') return;
 
     if (errors === 0) {
@@ -67,7 +67,6 @@ export default function DragonSpell({ onGameComplete }) {
 
   const {
     text,
-    input,
     cursor,
     wpm,
     accuracy,
