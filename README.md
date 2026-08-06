@@ -117,33 +117,6 @@ or
 Live Server
 ```
 
----
-
-# 📸 Screenshots
-
-## Home Page
-
-```
-(Add Screenshot Here)
-```
-
----
-
-## During Typing Test
-
-```
-(Add Screenshot Here)
-```
-
----
-
-## Result Screen
-
-```
-(Add Screenshot Here)
-```
-
----
 
 # ⚡ How It Works
 
