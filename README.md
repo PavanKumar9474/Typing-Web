@@ -281,14 +281,9 @@ https://github.com/PavanKumar9474
 Email
 
 ```
-your-email@example.com
+pavanharsha2004@gmail.com
 ```
 
-LinkedIn
-
-```
-Add Your LinkedIn Profile
-```
 
 GitHub
 
