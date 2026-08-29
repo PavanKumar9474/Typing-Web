@@ -91,7 +91,7 @@ cd Typing-Web
 
 ## Open Project
 
-Simply open
+Simply open and do
 
 ```
 index.html
